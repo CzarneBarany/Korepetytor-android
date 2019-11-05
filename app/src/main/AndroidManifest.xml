@@ -3,6 +3,8 @@
     package="com.czarneBarany.korepetytorsi"
     android:targetSandboxVersion="1">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,6 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Login"></activity>
+        <activity android:name=".Registration" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,11 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".itemsActivity">
-
-        </activity>
-
+        <activity android:name=".ItemsActivity" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
