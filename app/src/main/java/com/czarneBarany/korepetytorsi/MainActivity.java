@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startNewActivity(View view){
-        startActivity(new Intent(MainActivity.this, ItemsActivity.class));
+        startActivity(new Intent(MainActivity.this, SubjectActivity.class));
     }
 
     public void goToRegistration(View view){

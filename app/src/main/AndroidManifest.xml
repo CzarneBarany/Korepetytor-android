@@ -23,6 +23,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".ItemsActivity" />
+        <activity android:name=".SubjectActivity" />
+        <activity android:name=".Subject2Activity" />
+        <activity android:name=".NewAdvertisementActivity" />
+        <activity android:name=".ChooseTutorActivity" />
+        <activity android:name=".EditDataActivity" />
+        <activity android:name=".MyAccountActivity" />
+        <activity android:name=".ScheduleActivity" />
+        <activity android:name=".MainPage" />
     </application>
 
 </manifest>
