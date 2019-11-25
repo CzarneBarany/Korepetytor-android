@@ -43,8 +43,8 @@ public class NewAdvertisementActivity extends AppCompatActivity {
             public void onClick(View view) {
                 AdvertisementEntity advertisementEntity = new AdvertisementEntity(title.getText().toString(),
                         description.getText().toString(),
-                        "category",
-                        "level",
+                        getIntent().getStringExtra("subject2"),
+                        getIntent().getStringExtra("level"),
                         Integer.parseInt(pricePerHour.getText().toString())
                         //availability.getText().toString());
                 );

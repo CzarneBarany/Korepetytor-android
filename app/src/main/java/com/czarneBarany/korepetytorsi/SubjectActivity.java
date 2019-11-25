@@ -17,9 +17,9 @@ public class SubjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject);
 
-        Spinner spinnerSubject = findViewById(R.id.spinnerSubject);
+        final Spinner spinnerSubject = findViewById(R.id.spinnerSubject);
         final Spinner spinnerSubject2 = findViewById(R.id.spinnerSubject2);
-        Spinner spinnerLevel= findViewById(R.id.spinnerLevel);
+        final Spinner spinnerLevel= findViewById(R.id.spinnerLevel);
 
         ArrayAdapter<String> subjectAdapter = new ArrayAdapter<String>(SubjectActivity.this,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.subjects));
         subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -84,6 +84,9 @@ public class SubjectActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), NewAdvertisementActivity.class);
+                //intent.putExtra("subject",spinnerSubject.getSelectedItem().toString() );
+                intent.putExtra("subject2",spinnerSubject2.getSelectedItem().toString() );
+                intent.putExtra("level",spinnerLevel.getSelectedItem().toString() );
                 startActivity(intent);
             }
         });
