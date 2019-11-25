@@ -58,7 +58,7 @@ public class EditDataActivity extends AppCompatActivity {
 
         //wysłanie z edytowanych danych do bazy
 
-        AccountEntity accountEntity = new AccountEntity(email.getText().toString(),
+       /* AccountEntity accountEntity = new AccountEntity(email.getText().toString(),
                 passwordEditText.getText().toString(),
                 nameEditText.getText().toString(),
                 surrnameEditText.getText().toString(),
@@ -71,7 +71,7 @@ public class EditDataActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+*/
 
 
     }
