@@ -21,4 +21,12 @@ public class AdvertisementEntity {
 
 
     List<AccountEntity> listOfStudents = new ArrayList<>();
+
+    public AdvertisementEntity(String title, String description, String adCategory, String adLevelOfEducation, int pricePerHour) {
+        this.title = title;
+        this.description = description;
+        this.adCategory = adCategory;
+        this.adLevelOfEducation = adLevelOfEducation;
+        this.pricePerHour = pricePerHour;
+    }
 }

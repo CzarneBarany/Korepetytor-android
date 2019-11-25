@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 public class SubjectActivity extends AppCompatActivity {
 
@@ -14,17 +17,73 @@ public class SubjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject);
 
+        Spinner spinnerSubject = findViewById(R.id.spinnerSubject);
+        final Spinner spinnerSubject2 = findViewById(R.id.spinnerSubject2);
+        Spinner spinnerLevel= findViewById(R.id.spinnerLevel);
 
-        Button scienceButton = findViewById(R.id.scienceButton);
-        Button humanButton = findViewById(R.id.humanButton);
-        Button artButton = findViewById(R.id.artButton);
-        Button languageButton = findViewById(R.id.languageButton);
+        ArrayAdapter<String> subjectAdapter = new ArrayAdapter<String>(SubjectActivity.this,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.subjects));
+        subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSubject.setAdapter(subjectAdapter);
+
+        ArrayAdapter<String> levelAdapter = new ArrayAdapter<String>(SubjectActivity.this,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.level));
+        levelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerLevel.setAdapter(levelAdapter);
 
 
-        languageButton.setOnClickListener(new View.OnClickListener() {
+        spinnerSubject.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String [] subjects = getResources().getStringArray(R.array.subjects);
+                ArrayAdapter<String> subject2Adapter;
+
+                switch (subjects[position]) {
+                    case "Nauki ścisłe": {
+                        subject2Adapter = new ArrayAdapter<String>(SubjectActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.subjectsScience));
+                        subject2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        break;
+                    }
+                    case "Nauki humanistyczne": {
+                        subject2Adapter = new ArrayAdapter<String>(SubjectActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.subjectsHuman));
+                        subject2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                        break;
+                    }
+                    case "Nauki artystyczne": {
+                        subject2Adapter = new ArrayAdapter<String>(SubjectActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.subjectsArt));
+                        subject2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                        break;
+                    }
+                    case "Języki obce": {
+                         subject2Adapter = new ArrayAdapter<String>(SubjectActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.subjectsLanguage));
+                        subject2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                        break;
+                    }
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + subjects[position]);
+                }
+
+
+                spinnerSubject2.setAdapter(subject2Adapter);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+
+
+        Button buttonNext = findViewById(R.id.buttonNext);
+
+
+        buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Subject2Activity.class);
+                Intent intent = new Intent(getApplicationContext(), NewAdvertisementActivity.class);
                 startActivity(intent);
             }
         });

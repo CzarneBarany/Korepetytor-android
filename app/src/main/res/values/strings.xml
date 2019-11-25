@@ -1,3 +1,41 @@
 <resources>
     <string name="app_name">Korepetytorsi</string>
+    <string-array name="subjects">
+        <item>Nauki ścisłe</item>
+        <item>Nauki humanistyczne</item>
+        <item>Nauki artystyczne</item>
+        <item>Języki obce</item>
+    </string-array>
+    <string-array name="subjectsScience">
+        <item>Matematyka</item>
+        <item>Fizyka</item>
+        <item>Chemia</item>
+    </string-array>
+
+    <string-array name="subjectsHuman">
+        <item>Język polski</item>
+        <item>Historia</item>
+        <item>Wiedza o społeczeństwie</item>
+    </string-array>
+
+    <string-array name="subjectsArt">
+        <item>Muzyka</item>
+        <item>Plastyka</item>
+    </string-array>
+
+    <string-array name="subjectsLanguage">
+        <item>Język angielski</item>
+        <item>Język hiszpański</item>
+        <item>Język francuski</item>
+    </string-array>
+
+    <string-array name="level">
+        <item>Szkoła podstawowa</item>
+        <item>Gimnazjum</item>
+        <item>Szkoła średnia</item>
+        <item>Szkoła wyższa</item>
+    </string-array>
+
+
+    
 </resources>
