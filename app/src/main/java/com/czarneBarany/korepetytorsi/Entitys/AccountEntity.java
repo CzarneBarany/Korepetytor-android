@@ -27,6 +27,10 @@ public class AccountEntity {
 
     private List<AdvertisementEntity> myAdvertisements = new ArrayList<>();
 
+    public AccountEntity(){
+
+    }
+
     public AccountEntity(String email, String password, String firstname, String lastname, String city, String phoneNumber) {
         this.email = email;
         this.password = password;

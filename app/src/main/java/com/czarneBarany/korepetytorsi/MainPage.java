@@ -34,6 +34,14 @@ public class MainPage extends AppCompatActivity {
             }
         });
 
+        addOfferButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SubjectActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
 
     }

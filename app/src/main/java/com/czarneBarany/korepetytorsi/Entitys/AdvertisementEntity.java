@@ -11,9 +11,9 @@ public class AdvertisementEntity {
 
     private String description;
 
-    private String adCategory;
+    private String category;
 
-    private String adLevelOfEducation;
+    private String levelOfEducation;
 
     private int pricePerHour;
 
@@ -22,11 +22,14 @@ public class AdvertisementEntity {
 
     List<AccountEntity> listOfStudents = new ArrayList<>();
 
-    public AdvertisementEntity(String title, String description, String adCategory, String adLevelOfEducation, int pricePerHour) {
+
+
+    public AdvertisementEntity(String title, String description, String category, String levelOfEducation, int pricePerHour,AccountEntity teacher) {
         this.title = title;
         this.description = description;
-        this.adCategory = adCategory;
-        this.adLevelOfEducation = adLevelOfEducation;
+        this.category = category;
+        this.levelOfEducation = levelOfEducation;
         this.pricePerHour = pricePerHour;
+        this.teacher = teacher;
     }
 }

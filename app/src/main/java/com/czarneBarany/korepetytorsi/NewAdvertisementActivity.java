@@ -24,6 +24,8 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class NewAdvertisementActivity extends AppCompatActivity {
 
     @Override
@@ -45,9 +47,12 @@ public class NewAdvertisementActivity extends AppCompatActivity {
                         description.getText().toString(),
                         getIntent().getStringExtra("subject2"),
                         getIntent().getStringExtra("level"),
-                        Integer.parseInt(pricePerHour.getText().toString())
+                        Integer.parseInt(pricePerHour.getText().toString()),
+                        new AccountEntity()
                         //availability.getText().toString());
+
                 );
+
 
                 Gson gson = new Gson();
 
@@ -67,9 +72,9 @@ public class NewAdvertisementActivity extends AppCompatActivity {
     }
 
     private void createNewAdvertisement(JSONObject advertisementEntity) {
-
+        Log.d("XXX", advertisementEntity.toString());
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "URL NIEWIEM JAKI";
+        String url = "http://40.76.9.138:8080/api/add/ad";
 
         JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url,advertisementEntity,
                 new Response.Listener<JSONObject>() {
