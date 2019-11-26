@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -27,6 +28,8 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         Button loginButton = findViewById(R.id.saveButton);
+        final EditText email = findViewById(R.id.emailEditText);
+        final EditText password = findViewById(R.id.passwordEditText);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,8 +38,8 @@ public class Login extends AppCompatActivity {
                 JSONObject log = new JSONObject();
 
                 try {
-                    log.put("email", "123@gmail.com");
-                    log.put("password", "123");
+                    log.put("email", email.getText());
+                    log.put("password", password.getText());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -53,7 +56,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void login(JSONObject log) {
-
+        VolleyLog.e(log.toString());
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://40.76.9.138:8080/api/login";
 

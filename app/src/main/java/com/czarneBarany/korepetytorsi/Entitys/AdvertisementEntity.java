@@ -24,11 +24,12 @@ public class AdvertisementEntity {
 
 
 
-    public AdvertisementEntity(String title, String description, String adCategory, String levelOfEducation, int pricePerHour) {
+    public AdvertisementEntity(String title, String description, String category, String levelOfEducation, int pricePerHour,AccountEntity teacher) {
         this.title = title;
         this.description = description;
         this.category = category;
         this.levelOfEducation = levelOfEducation;
         this.pricePerHour = pricePerHour;
+        this.teacher = teacher;
     }
 }

@@ -47,8 +47,10 @@ public class NewAdvertisementActivity extends AppCompatActivity {
                         description.getText().toString(),
                         getIntent().getStringExtra("subject2"),
                         getIntent().getStringExtra("level"),
-                        Integer.parseInt(pricePerHour.getText().toString())
+                        Integer.parseInt(pricePerHour.getText().toString()),
+                        new AccountEntity()
                         //availability.getText().toString());
+
                 );
 
 
