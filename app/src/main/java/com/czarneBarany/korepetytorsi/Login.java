@@ -1,6 +1,7 @@
 package com.czarneBarany.korepetytorsi;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -19,6 +21,9 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Login extends AppCompatActivity {
 
@@ -46,6 +51,7 @@ public class Login extends AppCompatActivity {
 
                 login(log);
 
+
                 Intent intent = new Intent(getApplicationContext(), MainPage.class);
                 startActivity(intent);
             }
@@ -64,6 +70,14 @@ public class Login extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
+                        try {
+                            preferences.edit().putString("accountId", response.getString("accountId")).apply();
+                            preferences.edit().putString("jwtToken", response.getString("jwtToken")).apply();
+                            preferences.edit().putString("role", response.getString("role")).apply();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         VolleyLog.e(response.toString());
                     }
                 }, new Response.ErrorListener() {
@@ -71,7 +85,15 @@ public class Login extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e(error.getMessage());
             }
-        });
+        })
+        {
+            @Override
+            public Map<String,String> getHeaders() throws AuthFailureError{
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", "Bearer "+ getSharedPreferences("myPrefs", MODE_PRIVATE).getString("jwtToken",""));
+                return params;
+            }
+        };
         queue.add(stringRequest);
     }
 }
