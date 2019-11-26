@@ -22,6 +22,7 @@ public class MainPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SubjectActivity.class);
+                intent.putExtra("option number", 1);
                 startActivity(intent);
             }
         });
@@ -30,6 +31,23 @@ public class MainPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MyAccountActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        addOfferButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SubjectActivity.class);
+                intent.putExtra("option number2", 2);
+                startActivity(intent);
+            }
+        });
+
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
         });
