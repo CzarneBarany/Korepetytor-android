@@ -93,6 +93,8 @@ public class SubjectActivity extends AppCompatActivity {
                         startActivity(intent);
                     } else if(option==1){
                         Intent intent = new Intent(getApplicationContext(), ChooseTutorActivity.class);
+                        intent.putExtra("subject2", spinnerSubject2.getSelectedItem().toString());
+                        intent.putExtra("level", spinnerLevel.getSelectedItem().toString());
 
                         startActivity(intent);
                     }

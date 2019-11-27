@@ -54,8 +54,8 @@ public class ScheduleActivity extends AppCompatActivity {
 
 
 
-        //MyAdapter adapter = new MyAdapter(this, Title, User);
-        //listView.setAdapter(adapter);
+        MyAdapter adapter = new MyAdapter(this, Title, User);
+        listView.setAdapter(adapter);
 
     }
 
@@ -94,14 +94,14 @@ public class ScheduleActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    /*class MyAdapter extends ArrayAdapter<String> {
+    class MyAdapter extends ArrayAdapter<String> {
 
         Context context;
         String rTitle[];
         String rDescription[];
 
         MyAdapter(Context c, String title[], String description[]) {
-            super(c, R.layout.row, R.id.textView20, title);
+            super(c, R.layout.row2, R.id.textView30, title);
             this.context = c;
             this.rTitle = title;
             this.rDescription = description;
@@ -112,14 +112,14 @@ public class ScheduleActivity extends AppCompatActivity {
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             LayoutInflater layoutInflater = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View row = layoutInflater.inflate(R.layout.row, parent, false);
-            TextView myTitle = row.findViewById(R.id.textView20);
-            TextView myDescription = row.findViewById(R.id.textView21);
+            TextView myTitle = row.findViewById(R.id.textView30);
+            TextView myDescription = row.findViewById(R.id.textView31);
 
             myTitle.setText(Title[position]);
-            myDescription.setText(Description[position]);
+            myDescription.setText(User[position]);
 
             return row;
         }
 
-    }*/
+    }
 }
