@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class NewAdvertisementActivity extends AppCompatActivity {
 
@@ -48,8 +49,7 @@ public class NewAdvertisementActivity extends AppCompatActivity {
                         getIntent().getStringExtra("subject2"),
                         getIntent().getStringExtra("level"),
                         Integer.parseInt(pricePerHour.getText().toString()),
-                        new AccountEntity()
-                        //availability.getText().toString());
+                        Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")))
 
                 );
 
