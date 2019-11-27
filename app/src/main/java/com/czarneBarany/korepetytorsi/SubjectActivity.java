@@ -3,6 +3,7 @@ package com.czarneBarany.korepetytorsi;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -78,18 +79,26 @@ public class SubjectActivity extends AppCompatActivity {
 
 
         Button buttonNext = findViewById(R.id.buttonNext);
+        final Integer option = getIntent().getIntExtra("option number",0);
+        final Integer option2 = getIntent().getIntExtra("option number2",0);
 
+            buttonNext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(option2==2) {
+                        Intent intent = new Intent(getApplicationContext(), NewAdvertisementActivity.class);
+                        //intent.putExtra("subject",spinnerSubject.getSelectedItem().toString() );
+                        intent.putExtra("subject2", spinnerSubject2.getSelectedItem().toString());
+                        intent.putExtra("level", spinnerLevel.getSelectedItem().toString());
+                        startActivity(intent);
+                    } else if(option==1){
+                        Intent intent = new Intent(getApplicationContext(), ChooseTutorActivity.class);
 
-        buttonNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), NewAdvertisementActivity.class);
-                //intent.putExtra("subject",spinnerSubject.getSelectedItem().toString() );
-                intent.putExtra("subject2",spinnerSubject2.getSelectedItem().toString() );
-                intent.putExtra("level",spinnerLevel.getSelectedItem().toString() );
-                startActivity(intent);
-            }
-        });
+                        startActivity(intent);
+                    }
+
+                }
+            });
 
 
 

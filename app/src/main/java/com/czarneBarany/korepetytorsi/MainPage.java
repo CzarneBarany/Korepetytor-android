@@ -28,6 +28,7 @@ public class MainPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SubjectActivity.class);
+                intent.putExtra("option number", 1);
                 startActivity(intent);
             }
         });
@@ -44,6 +45,9 @@ public class MainPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SubjectActivity.class);
+
+                intent.putExtra("option number2", 2);
+
                 startActivity(intent);
             }
         });
@@ -51,6 +55,7 @@ public class MainPage extends AppCompatActivity {
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 getSharedPreferences("myPrefs", MODE_PRIVATE).edit().remove("accountId").apply();
                 getSharedPreferences("myPrefs", MODE_PRIVATE).edit().remove("role").apply();
                 getSharedPreferences("myPrefs", MODE_PRIVATE).edit().remove("jwtToken").apply();
