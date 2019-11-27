@@ -70,7 +70,11 @@ public class EditDataActivity extends AppCompatActivity {
             editAccount(new JSONObject(gson.toJson(accountEntity)));
         } catch (JSONException e) {
             e.printStackTrace();
+
         }*/
+
+
+        }
 
 
 

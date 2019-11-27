@@ -27,6 +27,46 @@ public class AccountEntity {
 
     private List<AdvertisementEntity> myAdvertisements = new ArrayList<>();
 
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public List<AdvertisementEntity> getMyAdvertisements() {
+        return myAdvertisements;
+    }
+
     public AccountEntity(String email, String password, String firstname, String lastname, String city, String phoneNumber) {
         this.email = email;
         this.password = password;
