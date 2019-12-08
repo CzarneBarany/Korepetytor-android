@@ -26,14 +26,15 @@ import com.google.gson.Gson;
 
 import org.json.JSONArray;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class ScheduleActivity extends AppCompatActivity {
 
 
-    String Title[]=new String[100];
-    String User[]=new String[100];
+    ArrayList<String> Title=new ArrayList<>();
+    ArrayList<String> User=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -77,8 +78,8 @@ public class ScheduleActivity extends AppCompatActivity {
                         for(int i=0;i<obj.length;i++){
                             List<AccountEntity> list = obj[i].getListOfStudents();
                             for(int j=0;j<list.size();j++){
-                                Title[x]= obj[i].getTitle();
-                                User[x] = list.get(j).getEmail();
+                                Title.add(obj[i].getTitle());
+                                User.add(list.get(j).getEmail());
                             }
 
                         }
@@ -97,10 +98,10 @@ public class ScheduleActivity extends AppCompatActivity {
     class MyAdapter extends ArrayAdapter<String> {
 
         Context context;
-        String rTitle[];
-        String rDescription[];
+        ArrayList<String> rTitle;
+        ArrayList<String> rDescription;
 
-        MyAdapter(Context c, String title[], String description[]) {
+        MyAdapter(Context c, ArrayList<String> title, ArrayList<String> description) {
             super(c, R.layout.row2, R.id.textView30, title);
             this.context = c;
             this.rTitle = title;
@@ -115,8 +116,8 @@ public class ScheduleActivity extends AppCompatActivity {
             TextView myTitle = row.findViewById(R.id.textView30);
             TextView myDescription = row.findViewById(R.id.textView31);
 
-            myTitle.setText(Title[position]);
-            myDescription.setText(User[position]);
+            myTitle.setText(Title.get(position));
+            myDescription.setText(User.get(position));
 
             return row;
         }

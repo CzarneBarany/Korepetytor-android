@@ -78,9 +78,6 @@ public class EditDataActivity extends AppCompatActivity {
 
 
 
-    }
-
-
     private void editAccount(JSONObject accountEntity) {
 
         RequestQueue queue = Volley.newRequestQueue(this);

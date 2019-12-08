@@ -41,9 +41,9 @@ public class ChooseTutorActivity extends AppCompatActivity {
 
     ListView listView;
 
-    String Title[]=new String[100];
-    String Description[]=new String[100];
-    Integer ID[]=new Integer[100];
+    ArrayList<String> Title=new ArrayList<>();
+    ArrayList<String> Description=new ArrayList<>();
+    ArrayList<Integer> ID=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class ChooseTutorActivity extends AppCompatActivity {
                         "Yes",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                getIDAdvertisement("http://40.76.9.138:8080/api/add/studentToAdvertisement/"+ID[position]+"/"+Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")))
+                                getIDAdvertisement("http://40.76.9.138:8080/api/add/studentToAdvertisement/"+ID.get(position)+"/"+Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")))
                                 );
                                 dialog.cancel();
                             }
@@ -135,9 +135,9 @@ public class ChooseTutorActivity extends AppCompatActivity {
                         AdvertisementEntity[] obj=gson.fromJson(response.toString(),AdvertisementEntity[].class);
 
                         for(int i=0;i<obj.length;i++){
-                            Title[i]= obj[i].getTitle();
-                            Description[i] = obj[i].getDescription();
-                            ID[i] = obj[i].getAdId();
+                            Title.add(obj[i].getTitle());
+                            Description.add(obj[i].getDescription());
+                            ID.add(obj[i].getAdId());
                         }
 
                         Log.d("ABC",obj[0].getTitle());
@@ -156,10 +156,10 @@ public class ChooseTutorActivity extends AppCompatActivity {
     class MyAdapter extends ArrayAdapter<String> {
 
         Context context;
-        String rTitle[];
-        String rDescription[];
+        ArrayList<String> rTitle;
+        ArrayList<String> rDescription;
 
-        MyAdapter(Context c, String title[], String description[]) {
+        MyAdapter(Context c, ArrayList<String> title, ArrayList<String> description) {
             super(c, R.layout.row, R.id.textView20, title);
             this.context = c;
             this.rTitle = title;
@@ -174,8 +174,8 @@ public class ChooseTutorActivity extends AppCompatActivity {
             TextView myTitle = row.findViewById(R.id.textView20);
             TextView myDescription = row.findViewById(R.id.textView21);
 
-            myTitle.setText(Title[position]);
-            myDescription.setText(Description[position]);
+            myTitle.setText(Title.get(position));
+            myDescription.setText(Description.get(position));
 
             return row;
         }
