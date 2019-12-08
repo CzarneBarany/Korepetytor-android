@@ -12,11 +12,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.czarneBarany.korepetytorsi.Entitys.AccountEntity;
-import com.google.gson.Gson;
 
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class EditDataActivity extends AppCompatActivity {
@@ -26,7 +23,7 @@ public class EditDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_data);
 
-        Button saveButton = findViewById(R.id.saveButton);
+        Button saveButton = findViewById(R.id.loginButton);
 
         final EditText passwordEditText = findViewById(R.id.passordEditText);
         EditText nameEditText = findViewById(R.id.nameEditText);
@@ -75,6 +72,9 @@ public class EditDataActivity extends AppCompatActivity {
 
 
         }
+
+
+
 
 
 
