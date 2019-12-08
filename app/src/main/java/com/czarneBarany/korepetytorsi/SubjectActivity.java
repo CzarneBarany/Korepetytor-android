@@ -79,13 +79,12 @@ public class SubjectActivity extends AppCompatActivity {
 
 
         Button buttonNext = findViewById(R.id.buttonNext);
-        final Integer option = getIntent().getIntExtra("option number",0);
-        final Integer option2 = getIntent().getIntExtra("option number2",0);
+        final int option = getIntent().getIntExtra("option",0);
 
             buttonNext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(option2==2) {
+                    if(option==2) {
                         Intent intent = new Intent(getApplicationContext(), NewAdvertisementActivity.class);
                         //intent.putExtra("subject",spinnerSubject.getSelectedItem().toString() );
                         intent.putExtra("subject2", spinnerSubject2.getSelectedItem().toString());

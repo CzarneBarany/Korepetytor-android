@@ -28,7 +28,7 @@ public class MainPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SubjectActivity.class);
-                intent.putExtra("option number", 1);
+                intent.putExtra("option", 1);
                 startActivity(intent);
             }
         });
@@ -46,7 +46,7 @@ public class MainPage extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SubjectActivity.class);
 
-                intent.putExtra("option number2", 2);
+                intent.putExtra("option", 2);
 
                 startActivity(intent);
             }
