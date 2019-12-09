@@ -1,14 +1,18 @@
 package com.czarneBarany.korepetytorsi;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,7 +36,7 @@ import java.util.Objects;
 
 public class ScheduleActivity extends AppCompatActivity {
 
-
+    ListView listView;
     ArrayList<String> Title=new ArrayList<>();
     ArrayList<String> User=new ArrayList<>();
 
@@ -42,21 +46,7 @@ public class ScheduleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_schedule);
 
 
-        ListView listView = findViewById(R.id.taskList);
-
-        getAllAdvertisement();
-
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-
-        MyAdapter adapter = new MyAdapter(this, Title, User);
-        listView.setAdapter(adapter);
+        listView = findViewById(R.id.taskList);
 
     }
 
@@ -93,6 +83,59 @@ public class ScheduleActivity extends AppCompatActivity {
         });
 
         queue.add(stringRequest);
+    }
+
+    class DownloadData extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            getAllAdvertisement();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Log.d("background: ", "tlo");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            MyAdapter adapter = new MyAdapter(ScheduleActivity.this, Title, User);
+            listView.setAdapter(adapter);
+            Log.d("onpost: ","Post");
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(ScheduleActivity.this);
+                    builder1.setMessage("Czy chcesz się zapisać?");
+                    builder1.setCancelable(true);
+
+                    builder1.setPositiveButton(
+                            "Yes",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                   // getAllAdvertisement("http://40.76.9.138:8080/api/add/studentToAdvertisement/"+ID.get(position)+"/"+Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")))
+                                  //  );
+                                    dialog.cancel();
+                                }
+                            });
+
+                    builder1.setNegativeButton(
+                            "No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+                }
+            });
+        }
     }
 
     class MyAdapter extends ArrayAdapter<String> {

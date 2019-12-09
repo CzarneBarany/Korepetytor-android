@@ -2,6 +2,7 @@ package com.czarneBarany.korepetytorsi;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -52,50 +53,21 @@ public class ChooseTutorActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.englishList);
 
-        getAdvertisementDetails();
+        new DownloadData().execute();
 
+        //getAdvertisementDetails();
 
-        try {
-            Thread.sleep(3000);
+        //Log.d("******dupa4","xd");
+
+       /* try {
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        Log.d("Lista", String.valueOf(Title));
+        Log.d("******dupa5","xd");*/
 
-        MyAdapter adapter = new MyAdapter(this, Title, Description);
-        listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(ChooseTutorActivity.this);
-                builder1.setMessage("Czy chcesz się zapisać?");
-                builder1.setCancelable(true);
-
-                builder1.setPositiveButton(
-                        "Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                getIDAdvertisement("http://40.76.9.138:8080/api/add/studentToAdvertisement/"+ID.get(position)+"/"+Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")))
-                                );
-                                dialog.cancel();
-                            }
-                        });
-
-                builder1.setNegativeButton(
-                        "No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-            }
-        });
 
 
     }
@@ -125,23 +97,29 @@ public class ChooseTutorActivity extends AppCompatActivity {
         String level = getIntent().getStringExtra("level");
 
         String url = "http://40.76.9.138:8080/api/get/allAds/categoryAndLevelOfEducation/"+category+"/"+level;
+        Log.d("************", url);
 
         JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.GET, url,null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        VolleyLog.d(response.toString());
+//                        VolleyLog.d(response.toString());
+                        Log.d("******dupa1","xd");
+                        Log.d("*****sdhfsdhu",response.toString());
+                        Log.d("******dupa2","xd");
                         Gson gson=new Gson();
                         AdvertisementEntity[] obj=gson.fromJson(response.toString(),AdvertisementEntity[].class);
-
+                        Log.d("****OBJ", obj.toString());
                         for(int i=0;i<obj.length;i++){
+                            Log.d("***iterator", String.valueOf(i));
                             Title.add(obj[i].getTitle());
                             Description.add(obj[i].getDescription());
                             ID.add(obj[i].getAdId());
                         }
 
-                        Log.d("ABC",obj[0].getTitle());
+                        Log.d("ABC",Title.get(0));
                         Log.d("ABCD",obj[0].getDescription());
+                        Log.d("******dupa3","xd");
 
                     }
                 }, new Response.ErrorListener() {
@@ -152,6 +130,59 @@ public class ChooseTutorActivity extends AppCompatActivity {
         });
 
         queue.add(stringRequest);
+
+    }
+    class DownloadData extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            getAdvertisementDetails();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Log.d("background: ", "tlo");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            MyAdapter adapter = new MyAdapter(ChooseTutorActivity.this, Title, Description);
+            listView.setAdapter(adapter);
+            Log.d("onpost: ","Post");
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(ChooseTutorActivity.this);
+                    builder1.setMessage("Czy chcesz się zapisać?");
+                    builder1.setCancelable(true);
+
+                    builder1.setPositiveButton(
+                            "Yes",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    getIDAdvertisement("http://40.76.9.138:8080/api/add/studentToAdvertisement/"+ID.get(position)+"/"+Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")))
+                                    );
+                                    dialog.cancel();
+                                }
+                            });
+
+                    builder1.setNegativeButton(
+                            "No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+                }
+            });
+        }
     }
     class MyAdapter extends ArrayAdapter<String> {
 
