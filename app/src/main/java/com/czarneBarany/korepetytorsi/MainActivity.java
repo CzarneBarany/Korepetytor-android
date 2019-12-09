@@ -14,11 +14,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startNewActivity(View view){
-        startActivity(new Intent(MainActivity.this, SubjectActivity.class));
+        Intent intent = new Intent(getApplicationContext(), SubjectActivity.class);
+        intent.putExtra("option", 1);
+        startActivity(intent);
+
     }
 
     public void goToRegistration(View view){
-        startActivity(new Intent(MainActivity.this,Registration.class));
+        Intent intent = new Intent(getApplicationContext(), Registration.class);
+        startActivity(intent);
     }
     public void goToLogIn(View view){
         startActivity(new Intent(MainActivity.this,Login.class));

@@ -17,19 +17,50 @@ public class AdvertisementEntity {
 
     private int pricePerHour;
 
-    private AccountEntity teacher;
+    private int teacherId;
+
 
 
     List<AccountEntity> listOfStudents = new ArrayList<>();
 
+    public int getAdId() {
+        return adId;
+    }
 
+    public String getTitle() {
+        return title;
+    }
 
-    public AdvertisementEntity(String title, String description, String category, String levelOfEducation, int pricePerHour,AccountEntity teacher) {
+    public String getDescription() {
+        return description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getLevelOfEducation() {
+        return levelOfEducation;
+    }
+
+    public int getPricePerHour() {
+        return pricePerHour;
+    }
+
+    public int getTeacherId() {
+        return teacherId;
+    }
+
+    public List<AccountEntity> getListOfStudents() {
+        return listOfStudents;
+    }
+
+    public AdvertisementEntity(String title, String description, String category, String levelOfEducation, int pricePerHour, int teacherId) {
         this.title = title;
         this.description = description;
         this.category = category;
         this.levelOfEducation = levelOfEducation;
         this.pricePerHour = pricePerHour;
-        this.teacher = teacher;
+        this.teacherId = teacherId;
     }
 }
