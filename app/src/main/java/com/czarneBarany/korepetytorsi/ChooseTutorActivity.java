@@ -55,20 +55,6 @@ public class ChooseTutorActivity extends AppCompatActivity {
 
         new DownloadData().execute();
 
-        //getAdvertisementDetails();
-
-        //Log.d("******dupa4","xd");
-
-       /* try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        Log.d("******dupa5","xd");*/
-
-
-
 
     }
     private void getIDAdvertisement(String url) {
@@ -103,23 +89,14 @@ public class ChooseTutorActivity extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-//                        VolleyLog.d(response.toString());
-                        Log.d("******dupa1","xd");
-                        Log.d("*****sdhfsdhu",response.toString());
-                        Log.d("******dupa2","xd");
                         Gson gson=new Gson();
                         AdvertisementEntity[] obj=gson.fromJson(response.toString(),AdvertisementEntity[].class);
-                        Log.d("****OBJ", obj.toString());
+
                         for(int i=0;i<obj.length;i++){
-                            Log.d("***iterator", String.valueOf(i));
                             Title.add(obj[i].getTitle());
                             Description.add(obj[i].getDescription());
                             ID.add(obj[i].getAdId());
                         }
-
-                        Log.d("ABC",Title.get(0));
-                        Log.d("ABCD",obj[0].getDescription());
-                        Log.d("******dupa3","xd");
 
                     }
                 }, new Response.ErrorListener() {
