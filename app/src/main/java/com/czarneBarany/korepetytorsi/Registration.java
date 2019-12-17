@@ -14,15 +14,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.czarneBarany.korepetytorsi.Entitys.AccountEntity;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import static com.czarneBarany.korepetytorsi.Entitys.models.Role.ROLE_USER;
 
 public class Registration extends AppCompatActivity {
 

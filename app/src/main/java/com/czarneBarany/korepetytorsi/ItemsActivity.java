@@ -27,7 +27,7 @@ public class ItemsActivity extends AppCompatActivity {
     private void simpleRequest() {
         // 1. Uzyskanie referencji do kolejki
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://52.170.24.234:8080/api/get/allUsers";
+        String url = "http://40.89.142.102:8080/api/get/allUsers";
 
         // 2. Utworzenie żądania
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,

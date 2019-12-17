@@ -88,9 +88,11 @@ public class ScheduleActivity extends AppCompatActivity {
 
     private void getAllAdvertisement(){
         RequestQueue queue = Volley.newRequestQueue(this);
+
         String url;
         if(option.equals("2")) url = "http://40.89.142.102:8080/api/get/allAds/teacher/" + Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")));
         else  url = "http://40.89.142.102:8080/api/get/allAds/student/" + Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")));
+
         JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.GET, url,null,
                 new Response.Listener<JSONArray>() {
                     @Override

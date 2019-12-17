@@ -1,14 +1,13 @@
 package com.czarneBarany.korepetytorsi;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,15 +16,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.czarneBarany.korepetytorsi.Entitys.AccountEntity;
 import com.czarneBarany.korepetytorsi.Entitys.AdvertisementEntity;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class NewAdvertisementActivity extends AppCompatActivity {
 
@@ -38,6 +33,8 @@ public class NewAdvertisementActivity extends AppCompatActivity {
         final EditText pricePerHour = findViewById(R.id.stawkaET);
         EditText availability = findViewById(R.id.availabilityET);
         final EditText description = findViewById(R.id.descriptionET);
+        final EditText lan = findViewById(R.id.editText3);
+        final EditText lon= findViewById(R.id.editText4);
         CheckBox drive = findViewById(R.id.driveCheckBox);
         Button addButton = findViewById(R.id.addButton);
 
@@ -49,7 +46,9 @@ public class NewAdvertisementActivity extends AppCompatActivity {
                         getIntent().getStringExtra("subject2"),
                         getIntent().getStringExtra("level"),
                         Integer.parseInt(pricePerHour.getText().toString()),
-                        Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")))
+                        1,
+                        lan.getText().toString(),
+                        lon.getText().toString()
 
                 );
 
@@ -61,7 +60,7 @@ public class NewAdvertisementActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainPage.class);
                 startActivity(intent);
             }
         });
