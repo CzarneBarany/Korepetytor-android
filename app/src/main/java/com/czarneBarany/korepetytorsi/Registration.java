@@ -1,7 +1,7 @@
 package com.czarneBarany.korepetytorsi;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -13,15 +13,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.czarneBarany.korepetytorsi.Entitys.AccountEntity;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import static com.czarneBarany.korepetytorsi.Entitys.models.Role.ROLE_USER;
 
 public class Registration extends AppCompatActivity {
 
@@ -57,7 +54,7 @@ public class Registration extends AppCompatActivity {
         Log.d("XXX", accountEntity.toString());
         // 1. Uzyskanie referencji do kolejki
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://40.76.9.138:8080/api/add/account";
+        String url = "http://40.89.142.102:8080/api/add/account";
 
         // 2. Utworzenie żądania
         JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url,accountEntity,

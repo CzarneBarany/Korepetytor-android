@@ -2,22 +2,21 @@ package com.czarneBarany.korepetytorsi;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,13 +25,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.czarneBarany.korepetytorsi.Entitys.AdvertisementEntity;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -45,18 +42,29 @@ public class ChooseTutorActivity extends AppCompatActivity {
     ArrayList<String> Title=new ArrayList<>();
     ArrayList<String> Description=new ArrayList<>();
     ArrayList<Integer> ID=new ArrayList<>();
-
+    String category;
+    String level;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_tutor);
 
         listView = findViewById(R.id.englishList);
-
+        category = getIntent().getStringExtra("subject2");
+        level = getIntent().getStringExtra("level");
         new DownloadData().execute();
 
 
     }
+
+    public void goToMap(View view){
+
+        Intent intent = new Intent(ChooseTutorActivity.this, MapsActivity.class);
+        //intent.putExtra("subject",spinnerSubject.getSelectedItem().toString() );
+        intent.putExtra("subject2", category);
+        intent.putExtra("level", level);
+        startActivity(intent);
+}
     private void getIDAdvertisement(String url) {
 
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -79,10 +87,9 @@ public class ChooseTutorActivity extends AppCompatActivity {
 
     private void getAdvertisementDetails(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String category = getIntent().getStringExtra("subject2");
-        String level = getIntent().getStringExtra("level");
 
-        String url = "http://40.76.9.138:8080/api/get/allAds/categoryAndLevelOfEducation/"+category+"/"+level;
+
+        String url = "http://40.89.142.102:8080/api/get/allAds/categoryAndLevelOfEducation/"+category+"/"+level;
         Log.d("************", url);
 
         JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.GET, url,null,
@@ -141,7 +148,7 @@ public class ChooseTutorActivity extends AppCompatActivity {
                             "Yes",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    getIDAdvertisement("http://40.76.9.138:8080/api/add/studentToAdvertisement/"+ID.get(position)+"/"+Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")))
+                                    getIDAdvertisement("http://40.89.142.102:8080/api/add/studentToAdvertisement/"+ID.get(position)+"/"+Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")))
                                     );
                                     dialog.cancel();
                                 }

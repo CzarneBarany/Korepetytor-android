@@ -68,7 +68,7 @@ public class Login extends AppCompatActivity {
     private void login(JSONObject log) {
         VolleyLog.e(log.toString());
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://40.76.9.138:8080/api/login";
+        String url = "http://40.89.142.102:8080/api/login";
 
         JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url,log,
                 new Response.Listener<JSONObject>() {

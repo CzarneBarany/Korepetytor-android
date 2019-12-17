@@ -19,7 +19,9 @@ public class AdvertisementEntity {
 
     private int teacherId;
 
+    private String xcoord;
 
+    private String ycoord;
 
     List<AccountEntity> listOfStudents = new ArrayList<>();
 
@@ -55,6 +57,14 @@ public class AdvertisementEntity {
         return listOfStudents;
     }
 
+    public String getXcoord() {
+        return xcoord;
+    }
+
+    public String getYcoord() {
+        return ycoord;
+    }
+
     public AdvertisementEntity(String title, String description, String category, String levelOfEducation, int pricePerHour, int teacherId) {
         this.title = title;
         this.description = description;
@@ -62,5 +72,16 @@ public class AdvertisementEntity {
         this.levelOfEducation = levelOfEducation;
         this.pricePerHour = pricePerHour;
         this.teacherId = teacherId;
+    }
+
+    public AdvertisementEntity(String title, String description, String category, String levelOfEducation, int pricePerHour, int teacherId, String xCoord, String yCoord) {
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.levelOfEducation = levelOfEducation;
+        this.pricePerHour = pricePerHour;
+        this.teacherId = teacherId;
+        this.xcoord = xCoord;
+        this.ycoord = yCoord;
     }
 }
