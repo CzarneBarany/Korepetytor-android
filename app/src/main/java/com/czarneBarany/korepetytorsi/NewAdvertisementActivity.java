@@ -60,7 +60,7 @@ public class NewAdvertisementActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainPage.class);
                 startActivity(intent);
             }
         });
