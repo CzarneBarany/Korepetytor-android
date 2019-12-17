@@ -28,6 +28,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
+import com.czarneBarany.korepetytorsi.Entitys.AccountEntity;
 import com.czarneBarany.korepetytorsi.Entitys.AdvertisementEntity;
 import com.google.gson.Gson;
 
@@ -45,6 +46,12 @@ public class ChooseTutorActivity extends AppCompatActivity {
     ArrayList<String> Title=new ArrayList<>();
     ArrayList<String> Description=new ArrayList<>();
     ArrayList<Integer> ID=new ArrayList<>();
+    ArrayList<Integer> Price=new ArrayList<>();
+    ArrayList<Integer> TeacherID=new ArrayList<>();
+
+    ArrayList<String> TeacherName=new ArrayList<>();
+    ArrayList<String> PhoneNumber=new ArrayList<>();
+    ArrayList<Integer> AccountID=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +60,8 @@ public class ChooseTutorActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.englishList);
 
+        new DownloadAccountData().execute();
         new DownloadData().execute();
-
-
     }
     private void getIDAdvertisement(String url) {
 
@@ -76,14 +82,40 @@ public class ChooseTutorActivity extends AppCompatActivity {
 
         queue.add(stringRequest);
     }
+    private void getAccountDetails(){
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        String url="http://40.89.142.102:8080/api/get/allAccounts";
+
+        JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.GET, url,null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Gson gson=new Gson();
+                        AccountEntity[] obj=gson.fromJson(response.toString(),AccountEntity[].class);
+
+                        for(int i=0;i<obj.length;i++){
+                            AccountID.add(obj[i].getAccountId());
+                            TeacherName.add(obj[i].getFirstname()+" "+obj[i].getLastname());
+                            PhoneNumber.add(obj[i].getPhoneNumber());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e(error.getMessage());
+            }
+        });
+
+        queue.add(stringRequest);
+    }
 
     private void getAdvertisementDetails(){
         RequestQueue queue = Volley.newRequestQueue(this);
         String category = getIntent().getStringExtra("subject2");
         String level = getIntent().getStringExtra("level");
 
-        String url = "http://40.76.9.138:8080/api/get/allAds/categoryAndLevelOfEducation/"+category+"/"+level;
-        Log.d("************", url);
+        String url = "http://40.89.142.102:8080/api/get/allAds/categoryAndLevelOfEducation/"+category+"/"+level;
 
         JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.GET, url,null,
                 new Response.Listener<JSONArray>() {
@@ -96,6 +128,8 @@ public class ChooseTutorActivity extends AppCompatActivity {
                             Title.add(obj[i].getTitle());
                             Description.add(obj[i].getDescription());
                             ID.add(obj[i].getAdId());
+                            Price.add(obj[i].getPricePerHour());
+                            TeacherID.add(obj[i].getTeacherId());
                         }
 
                     }
@@ -109,17 +143,30 @@ public class ChooseTutorActivity extends AppCompatActivity {
         queue.add(stringRequest);
 
     }
+    class DownloadAccountData extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            getAccountDetails();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
     class DownloadData extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
             getAdvertisementDetails();
+
             try {
-                Thread.sleep(500);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Log.d("background: ", "tlo");
             return null;
         }
 
@@ -127,28 +174,37 @@ public class ChooseTutorActivity extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             MyAdapter adapter = new MyAdapter(ChooseTutorActivity.this, Title, Description);
             listView.setAdapter(adapter);
-            Log.d("onpost: ","Post");
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                    int accountNumber=0;
+                    for(int i=0; i<AccountID.size();i++){
+                        if(TeacherID.get(position).equals(AccountID.get(i)))
+                            accountNumber=i;
+                    }
 
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(ChooseTutorActivity.this);
-                    builder1.setMessage("Czy chcesz się zapisać?");
-                    builder1.setCancelable(true);
+                    builder1.setTitle(Title.get(position))
+                    .setMessage(TeacherName.get(accountNumber)+"\n"+Description.get(position)+"\n"+"Cena za godzine: "+Price.get(position)+"\n"+"Nr telefonu: "+PhoneNumber.get(accountNumber)+"\n")
+                    .setCancelable(true);
 
                     builder1.setPositiveButton(
-                            "Yes",
+                            "Zapisz",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    getIDAdvertisement("http://40.76.9.138:8080/api/add/studentToAdvertisement/"+ID.get(position)+"/"+Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")))
-                                    );
+
+
+                                    if(!getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "").equals("")) {
+                                        getIDAdvertisement("http://40.89.142.102:8080/api/add/studentToAdvertisement/" + ID.get(position) + "/" + Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")))
+                                        );
+                                    }
                                     dialog.cancel();
                                 }
                             });
 
                     builder1.setNegativeButton(
-                            "No",
+                            "Anuluj",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
