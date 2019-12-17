@@ -2,8 +2,10 @@ package com.czarneBarany.korepetytorsi;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,6 +45,7 @@ public class Login extends AppCompatActivity {
                 try {
                     log.put("email", email.getText());
                     log.put("password", password.getText());
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -55,15 +58,15 @@ public class Login extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                Intent intent = new Intent(getApplicationContext(), MainPage.class);
+                startActivity(intent);
 
-                //Intent intent = new Intent(getApplicationContext(), MainPage.class);
-                //startActivity(intent);
             }
         });
 
-
-
     }
+
+
 
     private void login(JSONObject log) {
         VolleyLog.e(log.toString());
@@ -75,10 +78,14 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
-                        try {
+                        Log.d("JD",response.toString());
+
+                         try {
                             preferences.edit().putString("accountId", response.getString("accountId")).apply();
                             preferences.edit().putString("jwtToken", response.getString("jwtToken")).apply();
                             preferences.edit().putString("role", response.getString("role")).apply();
+
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -91,12 +98,12 @@ public class Login extends AppCompatActivity {
             }
         })
         {
-            @Override
+            /*@Override
             public Map<String,String> getHeaders() throws AuthFailureError{
                 Map<String, String> params = new HashMap<>();
                 params.put("Authorization", "Bearer "+ getSharedPreferences("myPrefs", MODE_PRIVATE).getString("jwtToken",""));
                 return params;
-            }
+            }*/
         };
         queue.add(stringRequest);
     }

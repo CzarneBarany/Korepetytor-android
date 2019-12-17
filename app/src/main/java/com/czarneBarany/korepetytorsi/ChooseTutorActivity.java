@@ -193,6 +193,8 @@ public class ChooseTutorActivity extends AppCompatActivity {
                             "Zapisz",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+
+
                                     if(!getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "").equals("")) {
                                         getIDAdvertisement("http://40.89.142.102:8080/api/add/studentToAdvertisement/" + ID.get(position) + "/" + Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")))
                                         );
