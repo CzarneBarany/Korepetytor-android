@@ -64,7 +64,7 @@ public class ChooseTutorActivity extends AppCompatActivity {
 
 
     }
-   /* private void getIDAdvertisement(String url) {
+    private void getIDAdvertisement(String url) {
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -82,7 +82,7 @@ public class ChooseTutorActivity extends AppCompatActivity {
         });
 
         queue.add(stringRequest);
-    }*/
+    }
     private void getAccountDetails(){
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -168,8 +168,7 @@ public class ChooseTutorActivity extends AppCompatActivity {
                             "Yes",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    //getIDAdvertisement("http://40.89.142.102:8080/api/add/studentToAdvertisement/"+ID.get(position)+"/"+Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")))
-                                    //);
+                                    getIDAdvertisement("http://40.89.142.102:8080/api/add/studentToAdvertisement/"+ID.get(position)+"/"+Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", ""))));
                                     dialog.cancel();
                                 }
                             });

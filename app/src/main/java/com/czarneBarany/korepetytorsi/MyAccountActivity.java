@@ -27,8 +27,20 @@ public class MyAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyAccountActivity.this, ScheduleActivity.class);
+                intent.putExtra("option", 1);
                 startActivity(intent);
             }
         });
+
+        Button scheduleButton2=findViewById(R.id.scheduleButton2);
+        scheduleButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyAccountActivity.this, ScheduleActivity.class);
+                intent.putExtra("option", 2);
+                startActivity(intent);
+            }
+        });
+
     }
 }

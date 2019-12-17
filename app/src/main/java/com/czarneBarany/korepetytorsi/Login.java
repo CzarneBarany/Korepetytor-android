@@ -47,17 +47,23 @@ public class Login extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                login(log);
+               // login(log);
 
-                try {
+                /*try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
+                }*/
+
+                SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
+                preferences.edit().putString("accountId", "5").apply();
+                //preferences.edit().putString("jwtToken", response.getString("jwtToken")).apply();
+                //preferences.edit().putString("role", response.getString("role")).apply();
+                Intent intent = new Intent(getApplicationContext(), MainPage.class);
+                startActivity(intent);
 
 
-                //Intent intent = new Intent(getApplicationContext(), MainPage.class);
-                //startActivity(intent);
+
             }
         });
 
@@ -79,6 +85,9 @@ public class Login extends AppCompatActivity {
                             preferences.edit().putString("accountId", response.getString("accountId")).apply();
                             preferences.edit().putString("jwtToken", response.getString("jwtToken")).apply();
                             preferences.edit().putString("role", response.getString("role")).apply();
+                            Intent intent = new Intent(getApplicationContext(), MainPage.class);
+                            startActivity(intent);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
