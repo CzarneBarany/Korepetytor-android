@@ -1,8 +1,9 @@
 package com.czarneBarany.korepetytorsi;
 
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -11,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.czarneBarany.korepetytorsi.Entitys.AdvertisementEntity;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,10 +25,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -89,8 +93,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public boolean onMarkerClick(Marker marker) {
-        startActivity(new Intent(MapsActivity.this,MainPage.class));
+    public boolean onMarkerClick(final Marker marker) {
+        //startActivity(new Intent(MapsActivity.this,MainPage.class));
+        AdvertisementEntity eng = null;
+        for(AdvertisementEntity en : adEntityList){
+            if(en.getAdId()==(Integer)marker.getTag()){
+                eng = en;
+                break;
+            }
+        }
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(MapsActivity.this);
+        builder1.setTitle(eng.getTitle())
+                .setMessage(eng.getTeacherId()+"\n"+eng.getDescription()+"\n"+"Cena za godzine: "+eng.getPricePerHour()+"\n")
+                .setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Zapisz",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+
+                        if(!getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "").equals("")) {
+                            getIDAdvertisement("http://40.89.142.102:8080/api/add/studentToAdvertisement/" + marker.getTag()+ "/" + Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")))
+                            );
+                        }
+                        dialog.cancel();
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "Anuluj",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
         return false;
     }
 
@@ -117,5 +157,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         queue.add(stringRequest);
 
+    }
+
+    private void getIDAdvertisement(String url) {
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, url,null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        VolleyLog.d(response.toString());
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e(error.getMessage());
+            }
+        });
+
+        queue.add(stringRequest);
     }
 }

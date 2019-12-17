@@ -1,7 +1,8 @@
 package com.czarneBarany.korepetytorsi;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -48,6 +49,8 @@ public class Registration extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 
     private void registtation(JSONObject accountEntity) {
