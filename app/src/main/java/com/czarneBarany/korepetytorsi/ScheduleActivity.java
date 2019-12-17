@@ -41,12 +41,13 @@ public class ScheduleActivity extends AppCompatActivity {
     ArrayList<String> User=new ArrayList<>();
     ArrayList<String> TeacherName=new ArrayList<>();
     ArrayList<Integer> AccountID=new ArrayList<>();
+    String option;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
-
+        option = getIntent().getStringExtra("option");
 
         listView = findViewById(R.id.taskList);
 
@@ -87,7 +88,10 @@ public class ScheduleActivity extends AppCompatActivity {
 
     private void getAllAdvertisement(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://40.76.9.138:8080/api//get/allAds/teacher/" + Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")));
+
+        String url;
+        if(option.equals("2")) url = "http://40.89.142.102:8080/api/get/allAds/teacher/" + Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")));
+        else  url = "http://40.89.142.102:8080/api/get/allAds/student/" + Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")));
 
         JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.GET, url,null,
                 new Response.Listener<JSONArray>() {
@@ -97,7 +101,7 @@ public class ScheduleActivity extends AppCompatActivity {
                         Gson gson=new Gson();
                         AdvertisementEntity[] obj=gson.fromJson(response.toString(), AdvertisementEntity[].class);
 
-                        if(getIntent().getStringExtra("option").equals("2")){
+                        if(option.equals("2")){
                             for(int i=0;i<obj.length;i++){
                                 List<AccountEntity> list = obj[i].getListOfStudents();
                                 for(int j=0;j<list.size();j++){
@@ -107,6 +111,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
                             }
                         }else{
+
                             for(int i=0;i<obj.length;i++) {
                                 Title.add(obj[i].getTitle());
                                 for(int j=0; j<AccountID.size();j++) {
