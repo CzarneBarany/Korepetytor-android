@@ -45,6 +45,8 @@ public class ChooseTutorActivity extends AppCompatActivity {
     ArrayList<String> Title=new ArrayList<>();
     ArrayList<String> Description=new ArrayList<>();
     ArrayList<Integer> ID=new ArrayList<>();
+    ArrayList<Integer> Price=new ArrayList<>();
+    ArrayList<Integer> TeacherID=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +55,38 @@ public class ChooseTutorActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.englishList);
 
+        //Title.add("Nowy");
+        //Description.add("Opis");
+        //ID.add(0);
+        //Price.add(50);
+
         new DownloadData().execute();
 
 
     }
-    private void getIDAdvertisement(String url) {
+   /* private void getIDAdvertisement(String url) {
 
         RequestQueue queue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, url,null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        VolleyLog.d(response.toString());
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e(error.getMessage());
+            }
+        });
+
+        queue.add(stringRequest);
+    }*/
+    private void getAccountDetails(){
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        String url="http://40.89.142.102:8080/api/get/account/";
 
         JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, url,null,
                 new Response.Listener<JSONObject>() {
@@ -82,8 +109,7 @@ public class ChooseTutorActivity extends AppCompatActivity {
         String category = getIntent().getStringExtra("subject2");
         String level = getIntent().getStringExtra("level");
 
-        String url = "http://40.76.9.138:8080/api/get/allAds/categoryAndLevelOfEducation/"+category+"/"+level;
-        Log.d("************", url);
+        String url = "http://40.89.142.102:8080/api/get/allAds/categoryAndLevelOfEducation/"+category+"/"+level;
 
         JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.GET, url,null,
                 new Response.Listener<JSONArray>() {
@@ -96,6 +122,8 @@ public class ChooseTutorActivity extends AppCompatActivity {
                             Title.add(obj[i].getTitle());
                             Description.add(obj[i].getDescription());
                             ID.add(obj[i].getAdId());
+                            Price.add(obj[i].getPricePerHour());
+                            TeacherID.add(obj[i].getTeacherId());
                         }
 
                     }
@@ -115,11 +143,10 @@ public class ChooseTutorActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             getAdvertisementDetails();
             try {
-                Thread.sleep(500);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Log.d("background: ", "tlo");
             return null;
         }
 
@@ -127,22 +154,22 @@ public class ChooseTutorActivity extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             MyAdapter adapter = new MyAdapter(ChooseTutorActivity.this, Title, Description);
             listView.setAdapter(adapter);
-            Log.d("onpost: ","Post");
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(ChooseTutorActivity.this);
-                    builder1.setMessage("Czy chcesz się zapisać?");
-                    builder1.setCancelable(true);
+                    builder1.setTitle(Title.get(position))
+                    .setMessage(Description.get(position)+"\n"+"Cena za godzine: "+Price.get(position)+"\n")
+                    .setCancelable(true);
 
                     builder1.setPositiveButton(
                             "Yes",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    getIDAdvertisement("http://40.76.9.138:8080/api/add/studentToAdvertisement/"+ID.get(position)+"/"+Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")))
-                                    );
+                                    //getIDAdvertisement("http://40.89.142.102:8080/api/add/studentToAdvertisement/"+ID.get(position)+"/"+Integer.parseInt(Objects.requireNonNull(getSharedPreferences("myPrefs", MODE_PRIVATE).getString("accountId", "")))
+                                    //);
                                     dialog.cancel();
                                 }
                             });

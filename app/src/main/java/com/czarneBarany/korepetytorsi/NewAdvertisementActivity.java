@@ -61,6 +61,8 @@ public class NewAdvertisementActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -74,7 +76,7 @@ public class NewAdvertisementActivity extends AppCompatActivity {
     private void createNewAdvertisement(JSONObject advertisementEntity) {
         Log.d("XXX", advertisementEntity.toString());
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://40.76.9.138:8080/api/add/ad";
+        String url = "http://40.89.142.102:8080/api/add/ad";
 
         JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url,advertisementEntity,
                 new Response.Listener<JSONObject>() {

@@ -1,5 +1,6 @@
 package com.czarneBarany.korepetytorsi;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,13 +52,15 @@ public class Registration extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 
     private void registtation(JSONObject accountEntity) {
         Log.d("XXX", accountEntity.toString());
         // 1. Uzyskanie referencji do kolejki
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://40.76.9.138:8080/api/add/account";
+        String url = "http://40.89.142.102:8080/api/add/account";
 
         // 2. Utworzenie żądania
         JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url,accountEntity,
